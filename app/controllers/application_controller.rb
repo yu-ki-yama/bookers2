@@ -4,18 +4,16 @@ class ApplicationController < ActionController::Base
   # リダイレクト先を初期設定から変更
   # ログイン後
   def after_sign_in_path_for(resource)
-    about_path
+    user_path(resource.id)
   end
 
   # ログアウト後
   def after_sign_out_path_for(resource)
-    new_user_session_path
+    root_path
   end
-
-  
 
   protected
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:email])
   end
 end
