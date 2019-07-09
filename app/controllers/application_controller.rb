@@ -2,10 +2,14 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   # リダイレクト先を初期設定から変更
-  class ApplicationController < ActionController::Base
-    def after_sign_in_path_for(resource)
+  # ログイン後
+  def after_sign_in_path_for(resource)
+    about_path
+  end
 
-    end
+  # ログアウト後
+  def after_sign_out_path_for(resource)
+    new_user_session_path
   end
 
   
