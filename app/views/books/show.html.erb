@@ -1,5 +1,67 @@
 <%= render partial: '/navigation' %>
 
-<h1>book detail</h1>
+<div class="body">
+  <div class="container">
+
+    <p id="notice"></p>
+
+
+    <div class="row">
+
+      <div class="col-xs-3">
+        <%= render partial: '/sideProfile' %>
+      </div>
+
+      <div class="col-xs-9">
+        <h2>Book detail</h2>
+
+        <table class="table">
+          <tbody>
+
+
+            <tr>
+              <td>
+                <% if @user.profile_image_id.nil? %>
+                  <%= link_to user_path(@user.id) do %>
+                    <%= image_tag 'no_image.jpg', size: '40x40',class: 'attachment user profile_image fallback' %><br>
+                    <%= @user.name %>
+                  <% end %>
+                <% else %>
+                  <%= link_to user_path(@user[:id]) do %>
+                    <%= image_tag attachment_url(@user, :profile_image, :fill, 100, 100, format: "jpg"),class: 'attachment user profile_image fallback'%><br>
+                    <%= @user.name %>
+                  <% end %>
+                <% end %>
+              </td>
+
+              <td>
+                <%= link_to @display_book.title, book_path(@display_book.id) %>
+              </td>
+
+              <td>
+                <%= @display_book.body %>
+              </td>
+
+              <%if current_user.id == @user.id%>
+                <td>
+                  <%= link_to 'Edit', edit_book_path(@display_book.id),class: 'btn-sm btn-success' %>
+                </td>
+
+                <td>
+                  <%= link_to "Destroy", book_path(@display_book.id), method: :delete,class: 'btn-sm btn-danger',data: { confirm: '本当に消しますか?' } %>
+                </td>
+
+            <% end %>
+
+            </tr>
+
+
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 
 <%= render partial: '/footer' %>

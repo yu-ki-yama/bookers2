@@ -1,5 +1,37 @@
 <%= render partial: '/navigation' %>
 
-<h1>user edit</h1>
+<div class="body">
+
+  <div class="container">
+    <p id="notice"></p>
+
+    <h2>User info</h2>
+
+    <%= form_for(@user) do |f| %>
+
+      <div class="field">
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+      </div>
+      <div class="field">
+        <%= f.label :introduction %>
+        <%= f.attachment_field :profile_image %>
+      </div>
+      <div class="field">
+        <%= f.label :introduction %>
+        <%= f.text_area :introduction %>
+      </div>
+      <div class="actions">
+        <%= f.submit 'Update User' %>
+      </div>
+
+    <% end %>
+  </div>
+
+
+</div>
+
+
+
 
 <%= render partial: '/footer' %>

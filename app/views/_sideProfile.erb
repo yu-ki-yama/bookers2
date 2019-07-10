@@ -1,0 +1,45 @@
+<h2>User info</h2>
+<% if @image.nil? %>
+  <%= image_tag 'no_image.jpg', size: '100x100',class: 'attachment user profile_image fallback' %>
+<% else %>
+  <%= image_tag attachment_url(@user, :profile_image, :fill, 100, 100, format: "jpg"),class: 'attachment user profile_image fallback' %>
+<% end %>
+<table class="table">
+  <tbody>
+  <tr></tr>
+  <tr>
+    <th>name</th>
+    <th><%= @user.name %></th>
+  </tr>
+  <tr>
+    <th>introduction</th>
+    <th><%= @user.introduction %></th>
+  </tr>
+  </tbody>
+</table>
+
+<div class="row">
+  <% if @user[:id] == current_user.id %>
+    <%= link_to '', edit_user_path(current_user.id), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench" %>
+  <% else %>
+    <%= link_to '', user_path(current_user.id), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench" %>
+  <% end %>
+</div>
+
+<h2>New book</h2>
+
+<%= form_for(@book) do |f| %>
+  <div class="field row">
+    <%= f.label :title %><br />
+    <%= f.text_field :title,class:"col-xs-12" %>
+  </div>
+
+  <div class="field row">
+    <%= f.label :body %><br />
+    <%= f.text_area :body,class:"col-xs-12" %>
+  </div>
+
+  <div class="actions row">
+    <%= f.submit "Create Book" ,class:'btn btn-primary col-xs-12'%>
+  </div>
+<% end %>
