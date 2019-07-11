@@ -4,7 +4,17 @@
   <div class="container">
 
     <p id="notice"></p>
+    <% if @book.errors.any? %>
+      <div id="error_explanation">
+        <h3><%= pluralize(@book.errors.count, "error") %> prohibited this obj from being saved:</h3>
+        <ul>
+          <% @book.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
 
+    <% end %>
 
     <div class="row">
 
@@ -28,8 +38,6 @@
           <tbody>
           <% @books.each do |book| %>
             <% @users.each do |user|%>
-              <%= puts book[:title] %>
-              <%= puts user[:profile_image_id] %>
               <% if user[:id] == book[:user_id] %>
                 <tr>
                   <td>

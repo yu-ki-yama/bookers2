@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   # Todo ルート未調整
-  resources :books
-  resources :users
+  resources :books, :except => 'new'
+  resources :users, :except => 'new'
 
 end

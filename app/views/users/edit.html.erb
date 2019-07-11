@@ -8,6 +8,17 @@
     <h2>User info</h2>
 
     <%= form_for(@user) do |f| %>
+      <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <h3><%= pluralize(@user.errors.count, "error") %> prohibited this obj from being saved:</h3>
+          <ul>
+            <% @user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+
+      <% end %>
 
       <div class="field">
         <%= f.label :name %>
