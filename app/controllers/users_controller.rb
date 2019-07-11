@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :user_check, only: [:edit, :update]
+  before_action :index_login_check, only:[:index]
 
   def index
     # 新規本の登録用
@@ -47,8 +48,16 @@ class UsersController < ApplicationController
 
   private
   def user_check
-    unless params[:id] == current_user.id
+    unless params[:id] == current_user.id.to_s
       redirect_to user_path(current_user.id)
     end
+  end
+
+  private
+  def index_login_check
+    unless user_signed_in?
+      redirect_to new_user_session_path
+    end
+
   end
 end

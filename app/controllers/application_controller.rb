@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:index,:about]
   before_action :prohibited_area_check, only: [:new]
 
   # リダイレクト先を初期設定から変更
@@ -11,8 +11,7 @@ class ApplicationController < ActionController::Base
 
   # ログアウト後
   def after_sign_out_path_for(resource)
-    # flash[:notice] = "表示したい内容"
-    root_path
+    "/"
   end
 
   protected
