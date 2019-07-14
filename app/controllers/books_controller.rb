@@ -13,13 +13,23 @@ class BooksController < ApplicationController
 
   def show
     @book = Book.new
-    # @image = current_user.profile_image_id
-    # @user = User.find(current_user.id)
-
     @display_book = Book.find(params[:id])
-
     @user = User.find(@display_book[:user_id])
     @image = @user.profile_image_id
+    @comment = BookComment.new
+    @comment_error = nil
+
+    @comments = BookComment.where(book_id: params[:id])
+
+    unless session[:comment_error].nil?
+      @comment_error = session[:comment_error]
+      session.delete(:comment_error)
+    end
+
+    unless session[:edit_comment].nil?
+      @edit_comment = session[:edit_comment]
+      session.delete(:edit_comment)
+    end
   end
 
   def create
@@ -37,7 +47,6 @@ class BooksController < ApplicationController
     else
       render 'books/index'
     end
-
   end
 
   def edit

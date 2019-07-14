@@ -4,7 +4,17 @@
   <div class="container">
 
     <p id="notice"><%= notice %></p>
+    <% unless @comment_error.nil? %>
+      <div id="error_explanation">
+        <h3><%= pluralize(@comment_error.count, "error") %> prohibited this comment from being saved:</h3>
+        <ul>
+          <% @comment_error.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
 
+    <% end %>
 
     <div class="row">
 
@@ -17,7 +27,6 @@
 
         <table class="table">
           <tbody>
-
 
             <tr>
               <td>
@@ -59,6 +68,59 @@
           </tbody>
 
         </table>
+
+        <h3>Comment List</h3>
+
+        <% @comments.each do |comment| %>
+          <table class="comment_list">
+            <tbody>
+              <tr>
+                <td class="comment_body"><strong><%= comment.body %></strong></td>
+              </tr>
+              <tr class="comment_detail">
+                <td><%= comment.user.name %></td>
+                <td><%= comment.updated_at.strftime("%Y-%m-%d %H:%M") %></td>
+                <%if current_user.id == comment.user_id%>
+                  <td>
+                    <%= link_to 'Edit', edit_book_comment_path(comment.id),class: 'btn-sm btn-success' %>
+                    <%= link_to "Destroy", book_comment_path(comment.id), method: :delete,class: 'btn-sm btn-danger',data: { confirm: '本当に消しますか?' } %>
+                  </td>
+                <% end %>
+              </tr>
+            </tbody>
+          </table>
+        <% end %>
+
+        <%unless @edit_comment.nil? %>
+          <%= form_tag(book_comment_path, method: :put) do%>
+            <%= label_tag 'body','Edit Comment',class:"text-info" %>
+            <%= hidden_field_tag :comment_id, @edit_comment['id'] %>
+
+            <div class=”input-group”>
+              <%= text_field_tag :body, @edit_comment['body'] , class:'form-control comment_form'%>
+                <span class="input-group-btn">
+                  <%= submit_tag 'Update',class:'btn btn-primary comment_btn' %>
+                </span>
+            </div>
+
+          <% end %>
+
+        <% else %>
+          <%= form_for(@comment) do |f| %>
+
+              <%= f.label :body,'Comment',class:"text-info" %>
+              <%= f.hidden_field :book_id, :value => @display_book.id %>
+
+              <div class=”input-group”>
+                <%= f.text_field :body ,class:'form-control comment_form'%>
+                <span class="input-group-btn">
+                  <%= f.submit 'submit',class:'btn btn-primary comment_btn' %>
+                </span>
+              </div>
+
+          <% end %>
+
+        <% end %>
       </div>
     </div>
   </div>

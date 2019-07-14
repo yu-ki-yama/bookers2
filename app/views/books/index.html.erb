@@ -29,9 +29,11 @@
           <thead>
           <tr>
             <th></th>
+            <th>Fav</th>
             <th>Title</th>
             <th>Opinion</th>
-            <th colspan="3"></th>
+
+            <th colspan="4"></th>
           </tr>
           </thead>
 
@@ -39,7 +41,7 @@
           <% @books.each do |book| %>
             <% @users.each do |user|%>
               <% if user[:id] == book[:user_id] %>
-                <tr>
+                <tr class="book_list_tr">
                   <td>
                     <% if user[:profile_image_id].nil? %>
                       <%= link_to user_path(user[:id]) do %>
@@ -52,9 +54,18 @@
                     <% end %>
                   </td>
                   <td>
+                    <%= link_to new_favorite_path(book.id) do %>
+                      <i class="fa fa-thumbs-o-up fa-2x fav_btn"></i><br>
+                      <div class="text_center">
+                        <%= link_to book.title, book_path(book.id),class: "nowrap" %>
+                      </div>
+                    <% end %>
+
+                  </td>
+                  <td class="nowrap">
                     <%= link_to book.title, book_path(book.id) %>
                   </td>
-                  <td>
+                  <td class="line-break">
                     <%= book.body %>
                   </td>
 

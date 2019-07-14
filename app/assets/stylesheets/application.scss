@@ -12,10 +12,12 @@
  *
  *= require_tree .
  *= require_self
+ *= require font-awesome
  */
 
 @import "bootstrap-sprockets";  /*ここを追加*/
 @import "bootstrap";            /*ここを追加*/
+@import "font-awesome";
 
 .navbar {
   min-height: 50px;
@@ -69,4 +71,77 @@ a:visited {
 
 #error_explanation {
   color: red;
+}
+
+span.input-group-btn {
+  display: inline;
+}
+
+.form-control {
+  display: inline;
+  width: 80%;
+}
+
+.input-group-btn:last-child {
+  z-index: 2;
+  display: inline-block;
+  margin-left: -7px;
+  margin-top: -3px;
+}
+
+.comment_list{
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 10px;
+  border: solid 4px black;
+  padding: 15px;
+  border-collapse: inherit;
+  border-radius: 50px 0px 0px 50px;
+}
+
+.comment_body{
+  font-size: 22px;
+  padding-bottom: 20px;
+  text-align: left;
+  padding-left: 20px;
+}
+
+table.comment_list {
+  table-layout: fixed;
+}
+
+.comment_detail > td:nth-child(1){
+  text-align: left;
+  padding-left: 30px;
+}
+
+.comment_detail > td:nth-child(2){
+  text-align: center;
+}
+
+.comment_detail > td:nth-child(3){
+  text-align: right;
+}
+
+.book_list_tr.td:nth-child(-n+2){
+  text-align: center;
+}
+
+.fav_btn{
+  padding: 5px;
+  border: rgb(77, 86, 97) solid 3px;
+  border-radius: 15px;
+}
+
+i.fa.fa-thumbs-o-up.fa-2x.fav_btn {
+  background-color: navajowhite;
+  text-decoration:none;
+}
+
+.nowrap{
+  white-space: nowrap
+}
+
+.text_center{
+  text-align: center;
 }
