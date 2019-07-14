@@ -9,6 +9,27 @@ class BooksController < ApplicationController
 
     @books = Book.all
     @users = User.all
+
+    hash = {}
+    self_check = {}
+    @books.each do |book|
+      favarites = Favorite.where(book_id: book.id.to_s)
+      self_favarite = Favorite.where(book_id: book.id.to_s).where(user_id: current_user.id.to_s)
+      if favarites.empty?
+        hash[book.id] = 0
+      else
+        hash[book.id] = favarites.count
+      end
+
+      if self_favarite.empty?
+        self_check[book.id] = false
+      else
+        self_check[book.id] = true
+      end
+    end
+
+    @fav_count = hash
+    @fav_self_check = self_check
   end
 
   def show

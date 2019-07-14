@@ -1,2 +1,57 @@
-<h1>Favorites#show</h1>
-<p>Find me in app/views/favorites/show.html.erb</p>
+<%= render partial: '/navigation' %>
+
+<div class="body">
+  <div class="container">
+
+    <p id="notice"></p>
+
+
+    <div class="row">
+
+      <div class="col-xs-3">
+        <%= render partial: '/sideProfile' %>
+      </div>
+
+      <div class="col-xs-9">
+        <h2>Favoriter List</h2>
+
+        <table class="table table-hover table-inverse">
+          <thead>
+          <tr>
+            <th>image</th>
+            <th>name</th>
+            <th></th>
+            <th colspan="3"></th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <% @users.each do |user| %>
+
+            <tr>
+              <td>
+                <% if user.profile_image_id.nil? %>
+                  <%= image_tag 'no_image.jpg', size: '40x40',class: 'attachment user profile_image fallback' %>
+                <% else %>
+                  <%= image_tag attachment_url(user, :profile_image, :fill, 50, 50, format: "jpg"),class: 'attachment user profile_image fallback'%>
+                <% end %>
+              </td>
+              <td>
+                <%= user.name %>
+              </td>
+              <td>
+                <%= link_to 'Show', user_path(user.id) %>
+              </td>
+
+            </tr>
+          <% end %>
+
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render partial: '/footer' %>

@@ -129,8 +129,16 @@ table.comment_list {
 
 .fav_btn{
   padding: 5px;
-  border: rgb(77, 86, 97) solid 3px;
+  border: rgb(255, 142, 226) solid 3px;
   border-radius: 15px;
+  color: black;
+}
+
+.fav_btn_on{
+  padding: 5px;
+  border: rgb(255, 142, 226) solid 3px;
+  border-radius: 15px;
+  color : pink;
 }
 
 i.fa.fa-thumbs-o-up.fa-2x.fav_btn {
@@ -144,4 +152,12 @@ i.fa.fa-thumbs-o-up.fa-2x.fav_btn {
 
 .text_center{
   text-align: center;
+}
+
+.fav_btn:hover {
+  color: black;
+}
+
+.fav_btn_on:hover {
+  color: pink;
 }
