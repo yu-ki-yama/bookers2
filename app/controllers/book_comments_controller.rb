@@ -1,9 +1,13 @@
 class BookCommentsController < ApplicationController
   def create
-    @book = Book.new
-    @display_book = Book.find(comment_params[:book_id])
-    @user = User.find(@display_book[:user_id])
-    @image = @user.profile_image_id
+    # @book = Book.new
+    # @display_book = Book.find(comment_params[:book_id])
+    # @user = User.find(@display_book[:user_id])
+    # @image = @user.profile_image_id
+    # # フォロ-されている数の抽出
+    # @follower_count = Follow.where(follow_user_id: current_user.id.to_i).count
+    # # フォローしている数の抽出
+    # @follow_count = Follow.where(user_id: current_user.id.to_i).count
 
     @comment = BookComment.new(comment_params)
     @comment.user_id = current_user.id

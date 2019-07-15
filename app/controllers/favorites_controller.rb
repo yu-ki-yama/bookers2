@@ -1,8 +1,16 @@
 class FavoritesController < ApplicationController
   before_action :prohibited_area_check, only: [:new]
   def show
-    puts "-------------------------"
-    puts params.inspect
+    # 新規本の登録用
+    @book = Book.new
+    # プロフィール写真
+    @image = current_user.profile_image_id
+    # ログイン中のユーザー情報
+    @user = User.find(current_user.id)
+    # フォロ-されている数の抽出
+    @follower_count = Follow.where(follow_user_id: current_user.id.to_i).count
+    # フォローしている数の抽出
+    @follow_count = Follow.where(user_id: current_user.id.to_i).count
 
     match_users = Favorite.where(book_id: params['format'])
 
@@ -13,18 +21,14 @@ class FavoritesController < ApplicationController
 
     @users = user_array
 
-    # 新規本の登録用
-    @book = Book.new
-    # プロフィール写真
-    @image = current_user.profile_image_id
-    # ログイン中のユーザー情報
-    @user = User.find(current_user.id)
+
   end
 
   def new
     user_match = Favorite.where(user_id: current_user.id.to_i).where(book_id: params['format'].to_i)
+    user_exit = User.find(params['format'].to_i)
 
-    if user_match.empty?
+    if user_match.empty? && !user_exit.blank?
        Favorite.new(user_id: current_user.id.to_i, book_id: params['format'].to_i).save
        redirect_to books_path
     end

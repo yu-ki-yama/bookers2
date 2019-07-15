@@ -6,10 +6,15 @@ class BooksController < ApplicationController
     @image = current_user.profile_image_id
     @user = User.find(current_user.id)
     @book = Book.new
+    # フォロ-されている数の抽出
+    @follower_count = Follow.where(follow_user_id: current_user.id.to_i).count
+    # フォローしている数の抽出
+    @follow_count = Follow.where(user_id: current_user.id.to_i).count
 
     @books = Book.all
     @users = User.all
 
+    # 本のお気に入りの状態を抽出
     hash = {}
     self_check = {}
     @books.each do |book|
@@ -37,6 +42,10 @@ class BooksController < ApplicationController
     @display_book = Book.find(params[:id])
     @user = User.find(@display_book[:user_id])
     @image = @user.profile_image_id
+    # フォロ-されている数の抽出
+    @follower_count = Follow.where(follow_user_id: @user['id']).count
+    # フォローしている数の抽出
+    @follow_count = Follow.where(user_id: @user['id']).count
     @comment = BookComment.new
     @comment_error = nil
 
@@ -56,6 +65,10 @@ class BooksController < ApplicationController
   def create
     @image = current_user.profile_image_id
     @user = User.find(current_user.id)
+    # フォロ-されている数の抽出
+    @follower_count = Follow.where(follow_user_id: current_user.id.to_i).count
+    # フォローしている数の抽出
+    @follow_count = Follow.where(user_id: current_user.id.to_i).count
 
     @books = Book.all
     @users = User.all

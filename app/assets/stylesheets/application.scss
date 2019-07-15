@@ -161,3 +161,78 @@ i.fa.fa-thumbs-o-up.fa-2x.fav_btn {
 .fav_btn_on:hover {
   color: pink;
 }
+
+.follow_btn_on:hover {
+  background-color: #5BC0DE;
+}
+
+.follow_btn:hover {
+  background-color: white;
+}
+
+.follow_btn_on{
+  border-radius: 50px;
+}
+
+.follow_btn{
+  border-radius: 50px;
+  background: white;
+}
+
+.btn.btn-info.follow_btn {
+  color: #1f9fff;
+}
+
+.tab_main_content{
+  margin: 0 33px;
+}
+
+.follow_list_tab > li{
+  width: 50%;
+}
+
+.user_inf{
+  margin: 33px;
+}
+
+.user_inf > table {
+  margin-bottom: 10px;
+}
+
+.user_inf > p{
+  margin: 0;
+  width: 80%;
+  word-wrap: break-word;
+  padding-left: 80px;
+}
+
+.follower_name{
+  margin: 0;
+  overflow: hidden;
+  width: 220px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 18px;
+  font-weight: bold;
+  padding:0 10px;
+}
+
+.follow_mes{
+  vertical-align: bottom;
+  padding-bottom: 10px;
+}
+
+.follow_mes > p{
+  width: 150px;
+  margin: 0;
+  background-color: rgba(177, 177, 177, 0.89);
+  border-radius: 50px;
+  font-size: 12px;
+  text-align: center;
+  padding: 2px;
+}
+
+.follow_list_follow_btn{
+  width: 100%;
+  text-align: right;
+}

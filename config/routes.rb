@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'follows/index'
   get 'favorites/show'
   root to:'homes#index'
   get '/home/about', to:'homes#about', as: 'about'
@@ -8,4 +9,5 @@ Rails.application.routes.draw do
   resources :users, :except => 'new'
   resources :book_comments, :except => [:index, :new, :show]
   resources :favorites, :only => [:show, :destroy, :new]
+  resources :follows
 end
