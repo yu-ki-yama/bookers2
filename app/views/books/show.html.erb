@@ -92,33 +92,39 @@
         <% end %>
 
         <%unless @edit_comment.nil? %>
-          <%= form_tag(book_comment_path, method: :put) do%>
-            <%= label_tag 'body','Edit Comment',class:"text-info" %>
-            <%= hidden_field_tag :comment_id, @edit_comment['id'] %>
+          <form action='/book_comments/<%= @edit_comment['id'] %>' accept-charset="UTF-8" method="post">
+            <input name="utf8" type="hidden" value="✓">
+            <input type="hidden" name="_method" value="put">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 
-            <div class=”input-group”>
-              <%= text_field_tag :body, @edit_comment['body'] , class:'form-control comment_form'%>
-                <span class="input-group-btn">
-                  <%= submit_tag 'Update',class:'btn btn-primary comment_btn' %>
+            <label class="text-info" for="body">Edit Comment</label>
+            <input type="hidden" name="comment_id" id="comment_id" value="<%= @edit_comment['id'] %>">
+
+            <div class="”input-group”">
+              <input type="text" name="body" id="body" value="<%= @edit_comment['body'] %>" class="form-control comment_form">
+              <span class="input-group-btn">
+                  <input type="submit" name="commit" value="Update" class="btn btn-primary comment_btn" data-disable-with="Update">
                 </span>
             </div>
 
-          <% end %>
+          </form>
 
         <% else %>
-          <%= form_for(@comment) do |f| %>
+          <form class="new_book_comment" id="new_book_comment" action="/book_comments" accept-charset="UTF-8" method="post">
+            <input name="utf8" type="hidden" value="✓">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
 
-              <%= f.label :body,'Comment',class:"text-info" %>
-              <%= f.hidden_field :book_id, :value => @display_book.id %>
+            <label class="text-info" for="book_comment_body">Comment</label>
+            <input value="1" type="hidden" name="book_comment[book_id]" id="book_comment_book_id">
 
-              <div class=”input-group”>
-                <%= f.text_field :body ,class:'form-control comment_form'%>
-                <span class="input-group-btn">
-                  <%= f.submit 'submit',class:'btn btn-primary comment_btn' %>
+            <div class="”input-group”">
+              <input class="form-control comment_form" type="text" name="book_comment[body]" id="book_comment_body">
+              <span class="input-group-btn">
+                  <input type="submit" name="commit" value="submit" class="btn btn-primary comment_btn" data-disable-with="submit">
                 </span>
-              </div>
+            </div>
 
-          <% end %>
+          </form>
 
         <% end %>
       </div>
