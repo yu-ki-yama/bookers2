@@ -26,9 +26,9 @@ class FavoritesController < ApplicationController
 
   def new
     user_match = Favorite.where(user_id: current_user.id.to_i).where(book_id: params['format'].to_i)
-    user_exit = User.find(params['format'].to_i)
+    book_exit = Book.find(params['format'].to_i)
 
-    if user_match.empty? && !user_exit.blank?
+    if user_match.empty? && !book_exit.blank?
        Favorite.new(user_id: current_user.id.to_i, book_id: params['format'].to_i).save
        redirect_to books_path
     end

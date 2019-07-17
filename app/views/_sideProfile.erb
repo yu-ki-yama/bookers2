@@ -37,15 +37,15 @@
 
 <h2>New book</h2>
 
-<%= form_for(@book) do |f| %>
+<%= form_with model: @book do |f| %>
   <div class="field row">
     <%= f.label :title %><br />
-    <%= f.text_field :title,class:"col-xs-12" %>
+    <%= f.text_field :title,class:"col-xs-12 clear" %>
   </div>
 
   <div class="field row">
     <%= f.label :body %><br />
-    <%= f.text_area :body,class:"col-xs-12" %>
+    <%= f.text_area :body,class:"col-xs-12 clear" %>
   </div>
 
   <div class="actions row">

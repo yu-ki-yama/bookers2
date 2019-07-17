@@ -16,3 +16,9 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require_tree .
+
+$(function() {
+    $(document).on('ajax:success', 'form', function(e) {
+        $('.clear').val('');
+    })
+})

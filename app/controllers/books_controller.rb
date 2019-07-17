@@ -42,9 +42,7 @@ class BooksController < ApplicationController
     @display_book = Book.find(params[:id])
     @user = User.find(@display_book[:user_id])
     @image = @user.profile_image_id
-    # フォロ-されている数の抽出
     @follower_count = Follow.where(follow_user_id: @user['id']).count
-    # フォローしている数の抽出
     @follow_count = Follow.where(user_id: @user['id']).count
     @comment = BookComment.new
     @comment_error = nil
@@ -75,12 +73,31 @@ class BooksController < ApplicationController
 
     @book = Book.new(book_params)
     @book.user_id = current_user.id
+    @book.save
 
-    if @book.save
-      redirect_to book_path(@book.id), notice: 'You have creatad book successfully.'
-    else
-      render 'books/index'
+    # 本のお気に入りの状態を抽出
+    hash = {}
+    self_check = {}
+    @books.each do |book|
+      favarites = Favorite.where(book_id: book.id.to_s)
+      self_favarite = Favorite.where(book_id: book.id.to_s).where(user_id: current_user.id.to_s)
+
+      if favarites.empty?
+        hash[book.id] = 0
+      else
+        hash[book.id] = favarites.count
+      end
+
+      if self_favarite.empty?
+        self_check[book.id] = false
+      else
+        self_check[book.id] = true
+      end
     end
+
+    @fav_count = hash
+    @fav_self_check = self_check
+
   end
 
   def edit

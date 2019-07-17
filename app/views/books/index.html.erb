@@ -24,76 +24,8 @@
 
       <div class="col-xs-9">
         <h2>Books</h2>
+        <%= render partial: '/book_list_table',locals: {books: @books, users: @users, fav_count: @fav_count, fav_self_check: @fav_self_check} %>
 
-        <table class="table table-hover table-inverse">
-          <thead>
-          <tr>
-            <th></th>
-            <th>Favorite</th>
-            <th>Title</th>
-            <th>Opinion</th>
-
-            <th colspan="4"></th>
-          </tr>
-          </thead>
-
-          <tbody>
-          <% @books.each do |book| %>
-            <% @users.each do |user|%>
-              <% if user[:id] == book[:user_id] %>
-                <tr class="book_list_tr">
-                  <td>
-                    <% if user[:profile_image_id].nil? %>
-                      <%= link_to user_path(user[:id]) do %>
-                        <%= image_tag 'no_image.jpg', size: '40x40',class: 'attachment user profile_image fallback' %>
-                      <% end %>
-                    <% else %>
-                      <%= link_to user_path(user[:id]) do %>
-                        <%= image_tag attachment_url(user, :profile_image, :fill, 50, 50, format: "jpg"),class: 'attachment user profile_image fallback'%>
-                      <% end %>
-                    <% end %>
-                  </td>
-                  <td>
-                    <% if @fav_self_check[book.id] %>
-                      <div class="text_center">
-                        <%= link_to favorite_path(book.id),method: :delete do %>
-                          <i class="fa fa-heart fa-2x fav_btn_on"></i><br>
-                          <div class="text_center">
-                            <%= link_to @fav_count[book.id], favorites_show_path(book.id),class: "nowrap" %>
-                          </div>
-                        <% end %>
-                      </div>
-
-                    <% else %>
-                      <div class="text_center">
-                        <%= link_to new_favorite_path(book.id) do %>
-                          <i class="fa fa-heart-o fa-2x fav_btn"></i><br>
-                          <div class="text_center">
-                            <%= link_to @fav_count[book.id], favorites_show_path(book.id),class: "nowrap" %>
-                          </div>
-                        <% end %>
-                      </div>
-                    <% end %>
-
-
-                  </td>
-                  <td class="nowrap">
-                    <%= link_to book.title, book_path(book.id) %>
-                  </td>
-                  <td class="line-break">
-                    <%= book.body %>
-                  </td>
-
-                </tr>
-
-              <% end %>
-
-            <% end %>
-          <% end %>
-
-          </tbody>
-
-        </table>
       </div>
     </div>
   </div>
