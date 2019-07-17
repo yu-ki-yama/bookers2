@@ -9,5 +9,7 @@ Rails.application.routes.draw do
   resources :users, :except => 'new'
   resources :book_comments, :except => [:index, :new, :show]
   resources :favorites, :only => [:show, :destroy, :new]
+
   resources :follows
+  resources :searchs, :only => [:index]
 end
