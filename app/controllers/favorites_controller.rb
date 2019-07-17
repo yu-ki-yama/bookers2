@@ -30,8 +30,29 @@ class FavoritesController < ApplicationController
 
     if user_match.empty? && !book_exit.blank?
        Favorite.new(user_id: current_user.id.to_i, book_id: params['format'].to_i).save
-       redirect_to books_path
+
     end
+
+    @book = Book.find(params['format'].to_i)
+    hash = {}
+    self_check = {}
+    favarites = Favorite.where(book_id: @book.id.to_s)
+    self_favarite = Favorite.where(book_id: @book.id.to_s).where(user_id: current_user.id.to_s)
+    if favarites.empty?
+      hash[@book.id] = 0
+    else
+      hash[@book.id] = favarites.count
+    end
+
+    if self_favarite.empty?
+      self_check[@book.id] = false
+    else
+      self_check[@book.id] = true
+    end
+
+
+    @fav_count = hash
+    @fav_self_check = self_check
 
   end
 
@@ -40,8 +61,29 @@ class FavoritesController < ApplicationController
 
     unless user_match.empty?
       Favorite.find(user_match[0][:id].to_i).destroy
-      redirect_to books_path
+
     end
+
+    @book = Book.find(params['id'].to_i)
+    hash = {}
+    self_check = {}
+    favarites = Favorite.where(book_id: @book.id.to_s)
+    self_favarite = Favorite.where(book_id: @book.id.to_s).where(user_id: current_user.id.to_s)
+    if favarites.empty?
+      hash[@book.id] = 0
+    else
+      hash[@book.id] = favarites.count
+    end
+
+    if self_favarite.empty?
+      self_check[@book.id] = false
+    else
+      self_check[@book.id] = true
+    end
+
+
+    @fav_count = hash
+    @fav_self_check = self_check
 
   end
 

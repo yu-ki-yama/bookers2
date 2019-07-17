@@ -24,27 +24,28 @@
               <% end %>
             <% end %>
           </td>
-          <td>
-            <% if fav_self_check[book.id] %>
-              <div class="text_center">
-                <%= link_to favorite_path(book.id),method: :delete do %>
-                  <i class="fa fa-heart fa-2x fav_btn_on"></i><br>
-                  <div class="text_center">
-                    <%= link_to fav_count[book.id], favorites_show_path(book.id),class: "nowrap" %>
-                  </div>
-                <% end %>
-              </div>
+          <td class="book_list_fav_btn<%= book.id %>">
+            <%= render partial: '/book_list_fav_btn', locals: {book: book, fav_self_check: fav_self_check, fav_count: fav_count} %>
+            <%# if fav_self_check[book.id] %>
+<!--              <div class="text_center">-->
+                <%#= link_to favorite_path(book.id),method: :delete do %>
+<!--                  <i class="fa fa-heart fa-2x fav_btn_on"></i><br>-->
+<!--                  <div class="text_center">-->
+                    <%#= link_to fav_count[book.id], favorites_show_path(book.id),class: "nowrap" %>
+<!--                  </div>-->
+                <%# end %>
+<!--              </div>-->
 
-            <% else %>
-              <div class="text_center">
-                <%= link_to new_favorite_path(book.id) do %>
-                  <i class="fa fa-heart-o fa-2x fav_btn"></i><br>
-                  <div class="text_center">
-                    <%= link_to fav_count[book.id], favorites_show_path(book.id),class: "nowrap" %>
-                  </div>
-                <% end %>
-              </div>
-            <% end %>
+            <%# else %>
+<!--              <div class="text_center">-->
+                <%#= link_to new_favorite_path(book.id) do %>
+<!--                  <i class="fa fa-heart-o fa-2x fav_btn"></i><br>-->
+<!--                  <div class="text_center">-->
+                    <%#= link_to fav_count[book.id], favorites_show_path(book.id),class: "nowrap" %>
+<!--                  </div>-->
+                <%# end %>
+<!--              </div>-->
+            <%# end %>
 
 
           </td>

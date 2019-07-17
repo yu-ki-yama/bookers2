@@ -1,0 +1,1 @@
+$(".book_list_fav_btn<%= @book['id'] %>").html("<%= j(render '/book_list_fav_btn', {book: @book, fav_count: @fav_count, fav_self_check: @fav_self_check}) %>")
