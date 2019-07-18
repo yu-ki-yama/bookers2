@@ -1,5 +1,4 @@
 class FollowsController < ApplicationController
-  before_action :prohibited_area_check, only: [:new]
 
   def show
     # ログイン中のユーザー情報
@@ -81,8 +80,4 @@ class FollowsController < ApplicationController
     end
   end
 
-  #overrideでnewフィルター打ち消し
-  private
-  def prohibited_area_check
-  end
 end

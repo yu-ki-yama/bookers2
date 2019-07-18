@@ -1,5 +1,5 @@
 class FavoritesController < ApplicationController
-  before_action :prohibited_area_check, only: [:new]
+
   def show
     # 新規本の登録用
     @book = Book.new
@@ -87,8 +87,4 @@ class FavoritesController < ApplicationController
 
   end
 
-  #overrideでフィルター打ち消し
-  private
-  def prohibited_area_check
-  end
 end

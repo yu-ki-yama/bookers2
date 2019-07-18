@@ -1,6 +1,5 @@
 class BooksController < ApplicationController
   before_action :book_check, only: [:edit, :update]
-  before_action :index_login_check, only: [:index]
 
   def index
     @image = current_user.profile_image_id
@@ -130,14 +129,6 @@ class BooksController < ApplicationController
     unless book[:user_id] == current_user.id
       redirect_to books_path
     end
-  end
-
-  private
-  def index_login_check
-    unless user_signed_in?
-      redirect_to new_user_session_path
-    end
-
   end
 
 end

@@ -1,15 +1,12 @@
 Rails.application.routes.draw do
-  get 'follows/index'
-  get 'favorites/show'
-  root to:'homes#index'
-  get '/home/about', to:'homes#about', as: 'about'
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
-  resources :books, :except => 'new'
-  resources :users, :except => 'new'
-  resources :book_comments, :except => [:index, :new, :show]
+  root 'homes#home'
+  get '/home/about', to:'homes#about', as: 'about'
+  resources :books, :only => [:index, :show, :update, :destroy, :edit, :create]
+  resources :users, :only => [:index, :show, :update, :edit]
+  resources :book_comments, :only => [:create, :edit, :destroy, :update]
   resources :favorites, :only => [:show, :destroy, :new]
-
-  resources :follows
+  resources :follows, :only => [:show, :new, :destroy]
   resources :searchs, :only => [:index]
 end

@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :authenticate_user!, except: [:index,:about]
-  before_action :prohibited_area_check, only: [:new]
+  before_action :authenticate_user!, except: [:home, :about]
 
   # リダイレクト先を初期設定から変更
   # ログイン後
@@ -20,10 +19,4 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:update, keys: [:profile_image_id])
   end
 
-  private
-  def prohibited_area_check
-    if user_signed_in?
-      redirect_to user_path(current_user.id)
-    end
-  end
 end

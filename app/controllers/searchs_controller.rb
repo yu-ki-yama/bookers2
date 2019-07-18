@@ -1,5 +1,5 @@
 class SearchsController < ApplicationController
-  before_action :index_login_check, only: [:index]
+
   include SearchsHelper
 
   def index
@@ -52,11 +52,4 @@ class SearchsController < ApplicationController
 
   end
 
-  private
-  def index_login_check
-    unless user_signed_in?
-      redirect_to new_user_session_path
-    end
-
-  end
 end

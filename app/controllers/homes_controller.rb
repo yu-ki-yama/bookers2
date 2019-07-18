@@ -1,5 +1,6 @@
 class HomesController < ApplicationController
-  def index
+
+  def home
     # 静的なページ
   end
 
