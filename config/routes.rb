@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get 'favorites/show'
   root to:'homes#index'
   get '/home/about', to:'homes#about', as: 'about'
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   resources :books, :except => 'new'
   resources :users, :except => 'new'
