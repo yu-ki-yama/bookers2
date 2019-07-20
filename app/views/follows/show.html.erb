@@ -42,19 +42,7 @@
                         <td><p class="follower_name"><%= follow.name %></p></td>
                         <td class="follow_mes"><p>フォローされています</p></td>
 
-                            <% if @follow_check[follow.id] %>
-                              <td class="follow_list_follow_btn">
-                                <%= link_to follow_path(follow.id),method: :delete do %>
-                                  <div class="btn btn-info follow_btn_on">フォロー</div>
-                                <% end %>
-                              </td>
-                            <% else %>
-                              <td class="follow_list_follow_btn">
-                                <%= link_to new_follow_path(follow.id) do %>
-                                  <div class="btn btn-info follow_btn">フォロー</div>
-                                <% end %>
-                              </td>
-                            <% end %>
+                        <%= render partial: '/user_list_follow_btn', locals: {user: follow, follow_check: @follow_check} %>
 
                       </tr>
                   </tbody>
@@ -87,19 +75,7 @@
                           <% end %>
                         </td>
 
-                        <% if @follow_check[follow.id] %>
-                          <td class="follow_list_follow_btn">
-                            <%= link_to follow_path(follow.id),method: :delete do %>
-                              <div class="btn btn-info follow_btn_on">フォロー</div>
-                            <% end %>
-                          </td>
-                        <% else %>
-                          <td class="follow_list_follow_btn">
-                            <%= link_to new_follow_path(follow.id) do %>
-                              <div class="btn btn-info follow_btn">フォロー</div>
-                            <% end %>
-                          </td>
-                        <% end %>
+                        <%= render partial: '/user_list_follow_btn', locals: {user: follow, follow_check: @follow_check} %>
 
                       </tr>
                       </tbody>

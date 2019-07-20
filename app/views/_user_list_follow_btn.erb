@@ -1,0 +1,15 @@
+<% if user['id'] == current_user['id'] %>
+  <td></td>
+<% elsif follow_check[user['id']] %>
+  <td class="user_follow_btn<%= user['id'] %>">
+    <%= link_to follow_path(user['id']),method: :delete, remote:true do %>
+      <div class="btn btn-info follow_btn_on">フォロー</div>
+    <% end %>
+  </td>
+<% else %>
+  <td class="user_follow_btn<%= user['id'] %>">
+    <%= link_to new_follow_path(user['id']), remote:true do %>
+      <div class="btn btn-info follow_btn">フォロー</div>
+    <% end %>
+  </td>
+<% end %>

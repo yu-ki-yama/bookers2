@@ -17,21 +17,26 @@ class FollowsController < ApplicationController
 
   def new
     user_match = Follow.where(user_id: current_user.id.to_i).where(follow_user_id: params['format'].to_i)
-    user_exit = User.find(params['format'].to_i)
+    @user = User.find(params['format'].to_i)
 
-    if user_match.empty? && !user_exit.blank? && current_user.id.to_i != params['format'].to_i
+    if user_match.empty? && !@user.blank? && current_user.id.to_i != params['format'].to_i
       Follow.new(user_id: current_user.id.to_i, follow_user_id: params['format'].to_i).save
-      redirect_to users_path
     end
+
+    @follow_check = {params['format'].to_i => true}
+
   end
 
   def destroy
     user_match = Follow.where(user_id: current_user.id.to_i).where(follow_user_id: params['id'].to_i)
+    @user = User.find(params['id'].to_i)
 
     unless user_match.empty?
       Follow.find(user_match[0][:id].to_i).destroy
-      redirect_to users_path
     end
+
+    @follow_check = {params['id'].to_i => false}
+
   end
 
 end

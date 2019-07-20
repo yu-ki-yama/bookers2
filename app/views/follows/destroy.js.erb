@@ -1,0 +1,3 @@
+$(".user_follow_btn<%= @user['id'] %>").html("<%= j(render '/user_list_follow_btn', {user: @user, follow_check: @follow_check}) %>")
+count = $('.follow_count > a').text()
+$('.follow_count > a').text(+count-1)

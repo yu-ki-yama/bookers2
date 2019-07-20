@@ -1,6 +1,6 @@
 <% if fav_self_check.has_key?(book['id']) %>
   <div class="text_center">
-    <%= link_to favorite_path(book['id']),method: :delete,remote:true  do %>
+    <%= link_to favorite_path(book['id']),method: :delete, remote:true  do %>
       <i class="fa fa-heart fa-2x fav_btn_on"></i><br>
       <div class="text_center">
         <% if fav_count.has_key?(book['id']) %>
@@ -14,7 +14,7 @@
 
 <% else %>
   <div class="text_center">
-    <%= link_to new_favorite_path(book['id']),remote:true  do %>
+    <%= link_to new_favorite_path(book['id']), remote:true  do %>
       <i class="fa fa-heart-o fa-2x fav_btn"></i><br>
       <div class="text_center">
         <% if fav_count.has_key?(book['id']) %>
