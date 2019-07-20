@@ -1,43 +1,43 @@
 <h2>User info</h2>
-<% if @image.nil? %>
+<% if models['user']['profile_image_id'].nil? %>
   <%= image_tag 'no_image.jpg', size: '100x100',class: 'attachment user profile_image fallback' %>
 <% else %>
-  <%= image_tag attachment_url(@user, :profile_image, :fill, 100, 100, format: "jpg"),class: 'attachment user profile_image fallback' %>
+  <%= image_tag attachment_url(models['user'], :profile_image, :fill, 100, 100, format: "jpg"),class: 'attachment user profile_image fallback' %>
 <% end %>
 <table class="table">
   <tbody>
   <tr></tr>
   <tr>
     <th>name</th>
-    <th><%= @user.name %></th>
+    <th><%= models['user']['name'] %></th>
   </tr>
   <tr>
     <th>introduction</th>
-    <th><%= @user.introduction %></th>
+    <th><%= models['user']['introduction'] %></th>
   </tr>
 
   <tr>
     <th>follow</th>
-    <th><%= link_to @follow_count,follow_path(@user.id) %></th>
+    <th><%= link_to models['follow_count'],follow_path(models['user']['id']) %></th>
   </tr>
   <tr>
     <th>follower</th>
-    <th><%= link_to @follower_count,follow_path(@user.id) %></th>
+    <th><%= link_to models['follower_count'],follow_path(models['user']['id']) %></th>
   </tr>
   </tbody>
 </table>
 
 <div class="row">
-  <% if @user[:id] == current_user.id %>
-    <%= link_to '', edit_user_path(current_user.id), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench" %>
+  <% if models['user']['id'] == current_user['id'] %>
+    <%= link_to '', edit_user_path(current_user['id']), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench" %>
   <% else %>
-    <%= link_to '', user_path(current_user.id), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench" %>
+    <%= link_to '', user_path(current_user['id']), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench" %>
   <% end %>
 </div>
 
 <h2>New book</h2>
 
-<%= form_with model: @book do |f| %>
+<%= form_with model: models['book'] do |f| %>
   <div class="field row">
     <%= f.label :title %><br />
     <%= f.text_field :title,class:"col-xs-12 clear" %>

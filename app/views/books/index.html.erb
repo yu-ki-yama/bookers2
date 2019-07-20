@@ -4,27 +4,27 @@
   <div class="container">
 
     <p id="notice"></p>
-    <% if @book.errors.any? %>
-      <div id="error_explanation">
-        <h3><%= pluralize(@book.errors.count, "error") %> prohibited this obj from being saved:</h3>
-        <ul>
-          <% @book.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
-      </div>
+    <%# if @book.errors.any? %>
+<!--      <div id="error_explanation">-->
+<!--        <h3><%#= pluralize(@book.errors.count, "error") %> prohibited this book from being saved:</h3>-->
+<!--        <ul>-->
+          <%# @book.errors.full_messages.each do |message| %>
+<!--            <li><%#= message %></li>-->
+          <%# end %>
+<!--        </ul>-->
+<!--      </div>-->
 
-    <% end %>
+    <%# end %>
 
     <div class="row">
 
       <div class="col-xs-3">
-        <%= render partial: '/sideProfile' %>
+        <%= render partial: '/sideProfile',locals: {models: @side_profile_models} %>
       </div>
 
       <div class="col-xs-9">
         <h2>Books</h2>
-        <%= render partial: '/book_list_table',locals: {books: @books, users: @users, fav_count: @fav_count, fav_self_check: @fav_self_check} %>
+        <%= render partial: '/book_list_table',locals: {models: @book_list_table_models} %>
 
       </div>
     </div>

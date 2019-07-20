@@ -1,64 +1,18 @@
 class FollowsController < ApplicationController
+  include Side_profile_actions
+  include Follow_actions
 
   def show
-    # ログイン中のユーザー情報
-    @user = User.find(params[:id])
-    # 新規本の登録用
-    @book = Book.new
-    # ログイン中のユーザーの投稿情報
-    @books = @user.books
-    # プロフィール写真
-    @image = @user.profile_image_id
-
-    follower_check_hash = {}
+    @side_profile_models = get_side_profile_models(current_user['id'])
     users = User.all
-    followers = Follow.where(follow_user_id: current_user.id)
-    @follower_count = followers.count
-    # 全ユーザ情報からフォローしてくれているユーザを検索して取得
-    followers_array = []
-    followers.each do |follower|
-      users.each do |user|
-        if follower['user_id'] == user['id']
-          followers_array.push(user)
-          follower_check_hash[user['id']] = true
-          break
-        end
-      end
-    end
+    follow_list_inf = get_follow_inf(users, Follow.where(user_id: current_user['id']))
+    follower_inf_list = get_follower_inf(users)
 
-    current_user_follow_list = Follow.where(user_id: current_user.id)
-    @follow_count = current_user_follow_list.count
-    follow_check_hash = {}
-    users.each do |user|
-      unless current_user_follow_list.blank?
-        current_user_follow_list.each do |follow|
-          if user['id'] == follow['follow_user_id']
-            follow_check_hash[user['id']] = true
-            break
-          else
-            follow_check_hash[user['id']] = false
-          end
-        end
-      else
-        follow_check_hash[user['id']] = false
-      end
-    end
+    @follower_check = follower_inf_list['follower_check_hash']
+    @followers = follower_inf_list['follower_array']
+    @follow_check = follow_list_inf['follow_check_hash']
+    @follows = follow_list_inf['follow_array']
 
-    # フォローしている人の情報を抽出
-    follows_array = []
-    current_user_follow_list.each do |follow|
-      users.each do |user|
-        if follow['follow_user_id'] == user['id']
-          follows_array.push(user)
-          break
-        end
-      end
-    end
-
-    @follower_check = follower_check_hash
-    @follow_check = follow_check_hash
-    @followers = followers_array
-    @follows = follows_array
   end
 
   def new

@@ -6,4 +6,8 @@ class BookComment < ApplicationRecord
   validates :book_id, presence: true
   validates :body, presence: true, length: { maximum: 50 }
 
+  class << self
+
+  end
+
 end
