@@ -91,6 +91,7 @@
             </tbody>
           </table>
         <% end %>
+        <%= paginate(@comment_models['comments']) %>
 
         <%unless @comment_models['edit_comment'].nil? %>
           <%= form_tag(book_comment_path, method: :put) do%>

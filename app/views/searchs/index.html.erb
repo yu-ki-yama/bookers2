@@ -42,6 +42,8 @@
         </tbody>
 
       </table>
+
+      <%= paginate(@search_results) %>
     <% else %>
       <table class="table table-hover table-inverse">
         <thead>
@@ -93,6 +95,7 @@
         </tbody>
 
       </table>
+      <%= paginate(@search_results) %>
     <% end %>
 
   </div>

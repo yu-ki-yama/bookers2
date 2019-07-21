@@ -6,14 +6,14 @@ class UsersController < ApplicationController
 
   def index
     @side_profile_models = get_side_profile_models(current_user['id'])
-    @users = User.all
+    @users = User.page(params[:page])
     @follow_check = get_follow_inf(@users, Follow.where(user_id: current_user.id.to_i))['follow_check_hash']
 
   end
 
   def show
     @side_profile_models = get_side_profile_models(params['id'])
-    @books = @side_profile_models['user'].books
+    @books = @side_profile_models['user'].books.page(params[:page])
 
   end
 

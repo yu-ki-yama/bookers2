@@ -82,3 +82,5 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 
 gem 'dotenv-rails'
+gem 'kaminari'
+gem 'kaminari-bootstrap'

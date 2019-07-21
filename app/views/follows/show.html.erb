@@ -72,6 +72,8 @@
                         <td class="follow_mes">
                           <% if @follower_check.key?(follow.id.to_i) %>
                             <p>フォローされています</p>
+                          <% else %>
+                            <p class="non_background_color"></p>
                           <% end %>
                         </td>
 

@@ -8,7 +8,7 @@ class BooksController < ApplicationController
     @side_profile_models = get_side_profile_models(current_user['id'])
 
     models = get_favorite_count_model(current_user['id'])
-    models['books'] = Book.all
+    models['books'] = Book.page(params[:page]).per(6)
     models['users'] = User.all
     @book_list_table_models = models
 
@@ -19,19 +19,24 @@ class BooksController < ApplicationController
     @book = Book.find(params['id'])
     @side_profile_models = get_side_profile_models(@book['user_id'])
     @comment_models = get_book_comment_models(params['id'])
+    @comment_models['comments'] = @comment_models['comments'].page(params[:page]).per(3)
 
   end
 
   def create
-    # indexの場合必要
-    models = get_favorite_count_model(current_user['id'])
-    models['books'] = Book.all
-    models['users'] = User.all
-    @book_list_table_models = models
+    # # indexの場合必要
+    # models = get_favorite_count_model(current_user['id'])
+    # models['books'] = Book.all
+    # models['users'] = User.all
+    # @book_list_table_models = models
 
     book = Book.new(book_params)
     book['user_id'] = current_user.id
     book.save
+
+    if params[:url] =='/books'
+      redirect_to books_path
+    end
 
   end
 

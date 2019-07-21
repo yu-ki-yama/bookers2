@@ -26,6 +26,8 @@
         <h2>Books</h2>
         <%= render partial: '/book_list_table',locals: {models: @book_list_table_models} %>
 
+        <%= paginate(@book_list_table_models['books']) %>
+
       </div>
     </div>
   </div>
