@@ -15,7 +15,6 @@ class BooksController < ApplicationController
   end
 
   def show
-
     @book = Book.find(params['id'])
     @side_profile_models = get_side_profile_models(@book['user_id'])
     @comment_models = get_book_comment_models(params['id'])
@@ -24,18 +23,50 @@ class BooksController < ApplicationController
   end
 
   def create
-    # # indexの場合必要
-    # models = get_favorite_count_model(current_user['id'])
-    # models['books'] = Book.all
-    # models['users'] = User.all
-    # @book_list_table_models = models
+    # book = Book.new(book_params)
+    # book['user_id'] = current_user.id
+    # book.save
+    #
+    # if params[:url] =='/books'
+    #   redirect_to books_path
+    # end
 
-    book = Book.new(book_params)
-    book['user_id'] = current_user.id
-    book.save
+    uri = URI.parse("https://iss.ndl.go.jp/thumbnail/#{book_params['test']}")
 
-    if params[:url] =='/books'
-      redirect_to books_path
+      https = Net::HTTP.new(uri.host, uri.port)
+      https.use_ssl = (uri.scheme == 'https')
+      https.open_timeout = 10
+      https.read_timeout = 60
+      response = https.get(uri.request_uri)
+
+    begin
+
+      case response
+
+      when Net::HTTPSuccess
+        puts response.inspect
+
+        File.open("hoge.jpg", "wb") do |file|
+          open(uri) do |img|
+            file.puts img.read
+          end
+        end
+
+      when Net::HTTPRedirection
+        message = "Redirection: code=#{response.code} message=#{response.message}"
+        puts message
+      else
+        message = "HTTP ERROR: code=#{response.code} message=#{response.message}"
+        puts message
+      end
+    rescue IOError => e
+      puts e.inspect
+    rescue TimeoutError => e
+      puts e.inspect
+    rescue JSON::ParserError => e
+      puts e.inspect
+    rescue => e
+      puts e.inspect
     end
 
   end
@@ -61,7 +92,7 @@ class BooksController < ApplicationController
 
   private
   def book_params
-    params.require(:book).permit(:title, :body)
+    params.require(:book).permit(:title, :body, :test)
   end
 
   private

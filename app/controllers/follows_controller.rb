@@ -9,9 +9,9 @@ class FollowsController < ApplicationController
     follower_inf_list = get_follower_inf(users)
 
     @follower_check = follower_inf_list['follower_check_hash']
-    @followers = follower_inf_list['follower_array']
+    @followers = Kaminari.paginate_array(follower_inf_list['follower_array']).page(params[:page]).per(4)
     @follow_check = follow_list_inf['follow_check_hash']
-    @follows = follow_list_inf['follow_array']
+    @follows = Kaminari.paginate_array(follow_list_inf['follow_array']).page(params[:page]).per(4)
 
   end
 

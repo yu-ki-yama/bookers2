@@ -15,46 +15,50 @@
         <h2>Follow & Follower List</h2>
 
           <ul class="nav nav-tabs follow_list_tab">
-            <li class="nav-item active">
-              <a href="#follower" class="active" data-toggle="tab">フォロワー</a>
+            <li class="nav-item tab1 active">
+              <a href="#follower" data-toggle="tab">フォロワー</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item tab2">
               <a href="#follow" data-toggle="tab">フォロー中</a>
             </li>
           </ul>
 
           <div class="tab-content tab_main_content">
 <!--            タブ１のコンテンツ-->
-            <div id="follower" class="tab-pane active">
+            <div id="follower" class="tab-pane tab1 active">
               <% unless @followers.nil? %>
                 <% @followers.each do |follow| %>
-                <div class="user_inf">
-                <table>
-                  <tbody>
-                      <tr>
-                        <td>
-                          <% if follow.profile_image_id.nil? %>
-                            <%= image_tag 'no_image.jpg', size: '80x80',class: 'attachment user profile_image fallback' %>
-                          <% else %>
-                            <%= image_tag attachment_url(follow, :profile_image, :fill, 80, 80, format: "jpg"),class: 'attachment user profile_image fallback' %>
-                          <% end %>
-                        </td>
-                        <td><p class="follower_name"><%= follow.name %></p></td>
-                        <td class="follow_mes"><p>フォローされています</p></td>
+                  <div class="user_inf">
+                    <table>
+                      <tbody>
+                          <tr>
+                            <td>
+                              <% if follow.profile_image_id.nil? %>
+                                <%= image_tag 'no_image.jpg', size: '80x80',class: 'attachment user profile_image fallback' %>
+                              <% else %>
+                                <%= image_tag attachment_url(follow, :profile_image, :fill, 80, 80, format: "jpg"),class: 'attachment user profile_image fallback' %>
+                              <% end %>
+                            </td>
+                            <td><p class="follower_name"><%= follow.name %></p></td>
+                            <td class="follow_mes"><p>フォローされています</p></td>
 
-                        <%= render partial: '/user_list_follow_btn', locals: {user: follow, follow_check: @follow_check} %>
+                            <%= render partial: '/user_list_follow_btn', locals: {user: follow, follow_check: @follow_check} %>
 
-                      </tr>
-                  </tbody>
-                </table>
-                  <p><%= follow.introduction %></p>
-            </div>
-              <% end %>
+                          </tr>
+                      </tbody>
+                    </table>
+
+                    <p><%= follow.introduction %></p>
+                  </div>
+                <% end %>
+                <div class="paginate1">
+                  <%= paginate(@followers) %>
+                </div>
               <% end %>
 
             </div>
 <!--          　タブ２のコンテンツ-->
-            <div id="follow" class="tab-pane">
+            <div id="follow" class="tab-pane tab2">
               <% unless @follows.nil? %>
                 <% @follows.each do |follow| %>
                   <div class="user_inf">
@@ -85,6 +89,9 @@
                     <p><%= follow.introduction %></p>
                   </div>
                 <% end %>
+                <div class="paginate2">
+                  <%= paginate(@follows) %>
+                </div>
               <% end %>
 
             </div>
