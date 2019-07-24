@@ -8,21 +8,41 @@
 
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
+
         <h1>Editing Book</h1>
 
+        <% if @book.errors.any? %>
+          <div id="error_explanation">
+            <h3><%= pluralize(@book.errors.count, "error") %> prohibited this book from being saved:</h3>
+            <ul>
+              <% @book.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+
+        <% end %>
+
+        <%= form_with url: book_cover_search_path do |f| %>
+          <div class="field row">
+            <%= f.label :cover_search , "Cover Search"%><br />
+            <%= f.text_field :cover_search, :placeholder => "ISBN13", class:"col-xs-12 clear" %>
+          </div>
+
+          <div class="actions row">
+            <%= f.submit "Search Cover" ,class:'btn btn-primary col-xs-12'%>
+          </div>
+        <% end %>
+
+        <div class="preview"></div>
 
         <%= form_for(@book) do |f| %>
-          <% if @book.errors.any? %>
-            <div id="error_explanation">
-              <h3><%= pluralize(@book.errors.count, "error") %> prohibited this book from being saved:</h3>
-              <ul>
-                <% @book.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-                <% end %>
-              </ul>
-            </div>
 
-          <% end %>
+          <div class="field row image_upload">
+            <div class="upload_view"></div>
+            <%= f.label :profile_image, "Image" %>
+            <%= f.attachment_field :profile_image %>
+          </div>
 
           <div class="field row">
             <%= f.label :title %>

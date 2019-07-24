@@ -31,21 +31,15 @@
 
             <tr>
               <td>
-                <% if @side_profile_models['user']['profile_image_id.nil?'] %>
-                  <%= link_to user_path(side_profile_models['user']['id']) do %>
-                    <%= image_tag 'no_image.jpg', size: '40x40',class: 'attachment user profile_image fallback' %><br>
-                    <%= @side_profile_models['user']['name'] %>
-                  <% end %>
+                <% if @book['profile_image_id'].nil? %>
+                    <%= image_tag 'no_book.jpg', size: '40x40',class: 'attachment user profile_image fallback' %>
                 <% else %>
-                  <%= link_to user_path(@side_profile_models['user']['id']) do %>
-                    <%= image_tag attachment_url(@side_profile_models['user'], :profile_image, :fill, 100, 100, format: "jpg"),class: 'attachment user profile_image fallback'%><br>
-                    <%= @side_profile_models['user']['name'] %>
-                  <% end %>
+                    <%= image_tag attachment_url(@book, :profile_image, :fill, 130, 200, format: "jpg"),class: 'attachment user profile_image fallback'%>
                 <% end %>
               </td>
 
               <td>
-                <%= link_to @book.title, book_path(@book.id) %>
+                <%= @book.title %>
               </td>
 
               <td>

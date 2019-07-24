@@ -1,0 +1,5 @@
+if(<%= !session[:book_cover_url].nil? %>){
+    $('input[type=file]').val('')
+    $(".image_upload").css("display","none")
+    $(".preview").html('<img src=<%= session[:book_cover_url]%> alt="" width="130" height="200">')
+}

@@ -12,13 +12,13 @@
     <% models['books'].each do |book| %>
       <tr class="book_list_tr">
         <td>
-          <% if book.user['profile_image_id'].nil? %>
-            <%= link_to user_path(book.user['id']) do %>
-              <%= image_tag 'no_image.jpg', size: '40x40',class: 'attachment user profile_image fallback' %>
+          <% if book['profile_image_id'].nil? %>
+            <%= link_to user_path(book['id']) do %>
+              <%= image_tag 'no_book.jpg', size: '40x40',class: 'attachment user profile_image fallback' %>
             <% end %>
           <% else %>
-            <%= link_to user_path(book.user['id']) do %>
-              <%= image_tag attachment_url(book.user, :profile_image, :fill, 50, 50, format: "jpg"),class: 'attachment user profile_image fallback'%>
+            <%= link_to user_path(book['id']) do %>
+              <%= image_tag attachment_url(book, :profile_image, :fill, 50, 50, format: "jpg"),class: 'attachment user profile_image fallback'%>
             <% end %>
           <% end %>
         </td>

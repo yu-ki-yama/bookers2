@@ -23,34 +23,57 @@ class BooksController < ApplicationController
   end
 
   def create
-    # book = Book.new(book_params)
-    # book['user_id'] = current_user.id
-    # book.save
-    #
-    # if params[:url] =='/books'
-    #   redirect_to books_path
-    # end
+    book = Book.new(book_params)
+    book['user_id'] = current_user.id
+    book.save
 
-    uri = URI.parse("https://iss.ndl.go.jp/thumbnail/#{book_params['test']}")
+    unless book['profile_image_id'].nil?
+      session.delete(:book_cover_url)
+    end
 
-      https = Net::HTTP.new(uri.host, uri.port)
-      https.use_ssl = (uri.scheme == 'https')
-      https.open_timeout = 10
-      https.read_timeout = 60
-      response = https.get(uri.request_uri)
+    unless session[:book_cover_url].nil?
+      uri = URI.parse(session[:book_cover_url])
+      timestamp = Time.now.to_i
+      File.open("./app/assets/images/#{timestamp}.jpg", "wb") do |file|
+        open(uri) do |img|
+          file.puts img.read
+        end
+      end
+
+      update_book = Book.find(book['id'])
+      update_parms = book_params
+      update_parms["profile_image"] = File.open("./app/assets/images/#{timestamp}.jpg")
+      update_book.update(update_parms)
+
+      FileUtils.rm("./app/assets/images/#{timestamp}.jpg")
+      session.delete(:book_cover_url)
+
+    end
+
+    if params[:url] =='/books'
+      redirect_to books_path
+    end
+
+    @book = Book.new
+
+  end
+
+  def cover_search
+    session.delete(:book_cover_url)
+    url = "https://iss.ndl.go.jp/thumbnail/#{params['cover_search']}"
+    uri = URI.parse(url)
+    https = Net::HTTP.new(uri.host, uri.port)
+    https.use_ssl = (uri.scheme == 'https')
+    https.open_timeout = 10
+    https.read_timeout = 60
+    response = https.get(uri.request_uri)
 
     begin
 
       case response
 
       when Net::HTTPSuccess
-        puts response.inspect
-
-        File.open("hoge.jpg", "wb") do |file|
-          open(uri) do |img|
-            file.puts img.read
-          end
-        end
+        session[:book_cover_url] = url
 
       when Net::HTTPRedirection
         message = "Redirection: code=#{response.code} message=#{response.message}"
@@ -68,17 +91,40 @@ class BooksController < ApplicationController
     rescue => e
       puts e.inspect
     end
-
   end
 
   def update
     @book = Book.find(params[:id])
+    book = book_params
 
-    if @book.update(book_params)
-      redirect_to book_path(params[:id]),notice: 'You have updated book successfully.'
+    unless book_params['profile_image'] === "{}"
+      session.delete(:book_cover_url)
+      if @book.update(book)
+        redirect_to book_path(params[:id]),notice: 'You have updated book successfully.'
+      else
+        render 'books/edit'
+      end
     else
-      render 'books/edit'
+
+      uri = URI.parse(session[:book_cover_url])
+      timestamp = Time.now.to_i
+      File.open("./app/assets/images/#{timestamp}.jpg", "wb") do |file|
+        open(uri) do |img|
+          file.puts img.read
+        end
+      end
+
+      book["profile_image"] = File.open("./app/assets/images/#{timestamp}.jpg")
+      if @book.update(book)
+        redirect_to book_path(params[:id]),notice: 'You have updated book successfully.'
+      else
+        render 'books/edit'
+      end
+
+      FileUtils.rm("./app/assets/images/#{timestamp}.jpg")
+      session.delete(:book_cover_url)
     end
+
   end
 
   def edit
@@ -92,7 +138,7 @@ class BooksController < ApplicationController
 
   private
   def book_params
-    params.require(:book).permit(:title, :body, :test)
+    params.require(:book).permit(:title, :body, :profile_image)
   end
 
   private

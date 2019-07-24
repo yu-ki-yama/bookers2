@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   root 'homes#home'
   get '/home/about', to:'homes#about', as: 'about'
+  post 'book_cover_search', to:'books#cover_search', as: 'book_cover_search'
   resources :books, :only => [:index, :show, :update, :destroy, :edit, :create]
   resources :users, :only => [:index, :show, :update, :edit]
   resources :book_comments, :only => [:create, :edit, :destroy, :update]
