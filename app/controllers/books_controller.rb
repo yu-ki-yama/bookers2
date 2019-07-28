@@ -50,8 +50,12 @@ class BooksController < ApplicationController
 
     end
 
-    if params[:url] =='/books'
+    if params[:url] == '/books'
       redirect_to books_path
+    end
+
+    if params[:url] == "/users/#{current_user['id']}"
+      redirect_to user_path(current_user['id'])
     end
 
     @book = Book.new

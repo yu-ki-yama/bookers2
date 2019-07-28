@@ -14,6 +14,7 @@ class UsersController < ApplicationController
   def show
     @side_profile_models = get_side_profile_models(params['id'])
     @books = @side_profile_models['user'].books.page(params[:page])
+    @view_books = Book.where(user_id: current_user['id'])
 
   end
 

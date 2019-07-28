@@ -37,7 +37,7 @@
 </div>
 
 <h2>New book</h2>
-<%if request.path =='/books' || "/users/#{current_user['id']}" === request.path%>
+<%if request.path =='/books' || "/users/#{current_user['id']}" == request.path%>
   <%= form_with url: book_cover_search_path do |f| %>
     <div class="field row">
       <%= f.label :cover_search , "Cover Search"%><br />
