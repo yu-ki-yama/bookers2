@@ -14,8 +14,8 @@
 
       <div class="col-xs-9">
         <h2>Books</h2>
-
-        <% if get_execution_nums(@view_books).count < 6%>
+        <% if get_execution_nums(@view_books).count == 0 %>
+        <% elsif get_execution_nums(@view_books).count < 6 %>
           <ul class="single_slider">
 
             <% get_execution_nums(@view_books).each do |num| %>
